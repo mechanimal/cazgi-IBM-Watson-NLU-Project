@@ -45,7 +45,7 @@ app.get("/",(req,res)=>{
 //The endpoint for the webserver ending with /url/emotion
 app.get("/url/emotion", (req,res) => {
     //Extract the url passed from the client through the request object
-    let urlToAnalyze = req.query.url
+    let urlToAnalyze = req.query.url;
     const analyzeParams = 
          {
              "url": urlToAnalyze,
@@ -55,7 +55,7 @@ app.get("/url/emotion", (req,res) => {
                                  "limit": 1
                              }
              }
-         }
+         };
      
     const naturalLanguageUnderstanding = getNLUInstance();
      
@@ -71,43 +71,44 @@ app.get("/url/emotion", (req,res) => {
 
 //The endpoint for the webserver ending with /url/sentiment
 app.get("/url/sentiment", (req,res) => {
-    let urlToAnalyze = req.query.url
+    let urlToAnalyze = req.query.url;
     const analyzeParams = 
-         {
-             "url": urlToAnalyze,
-             "features": {
-                 "keywords": {
-                                 "sentiment": true,
-                                 "limit": 1
-                             }
-             }
-         }
-     
+    {
+        "url": urlToAnalyze,
+        "features": {
+            "keywords": {
+                "sentiment": true,
+                "limit": 1
+            }
+        }
+    };
+
     const naturalLanguageUnderstanding = getNLUInstance();
-     
+
     naturalLanguageUnderstanding.analyze(analyzeParams)
-      .then(analysisResults => {
-         //Please refer to the image to see the order of retrieval
-         return res.send(analysisResults.result.keywords[0].sentiment,null,2);
-      })
-      .catch(err => {
-      return res.send("Could not do desired operation "+err);
-      });
+    .then(analysisResults => {
+        //Retrieve the sentiment and return it as a formatted string
+
+        return res.send(analysisResults.result.keywords[0].sentiment,null,2);
+    })
+    .catch(err => {
+        return res.send("Could not do desired operation "+err);
+    });
 });
 
 //The endpoint for the webserver ending with /text/emotion
 app.get("/text/emotion", (req,res) => {
-    let textToAnalyze = req.query.text
+    let textToAnalyze = req.query.text;
     const analyzeParams = 
          {
-             "url": textToAnalyze,
+             "text": textToAnalyze,
              "features": {
                  "keywords": {
                                  "emotion": true,
                                  "limit": 1
                              }
              }
-         }
+         };
      
     const naturalLanguageUnderstanding = getNLUInstance();
      
@@ -122,17 +123,17 @@ app.get("/text/emotion", (req,res) => {
 });
 
 app.get("/text/sentiment", (req,res) => {
-    let textToAnalyze = req.query.text
+    let textToAnalyze = req.query.text;
     const analyzeParams = 
          {
-             "url": textToAnalyze,
+             "text": textToAnalyze,
              "features": {
                  "keywords": {
                                  "sentiment": true,
                                  "limit": 1
                              }
              }
-         }
+         };
      
     const naturalLanguageUnderstanding = getNLUInstance();
      
